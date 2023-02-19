@@ -11,13 +11,15 @@ export default function Page() {
       return {
         num: day.getTime(),
         formatted: format(day, "MM/dd"),
+        doe: format(day, "eee"),
       };
     });
   return (
     <div className="flex justify-around h-screen items-center">
       {week.map((day) => (
-        <Link href={`/d/${day.num}`} key={day.num} className="block text-5xl">
-          {day.formatted}
+        <Link href={`/d/${day.num}`} key={day.num} className="block">
+          <div className="text-5xl">{day.formatted}</div>
+          <div className="text-base">{day.doe}</div>
         </Link>
       ))}
     </div>
