@@ -13,7 +13,6 @@ export const StationPicker: React.FC<{ stations: Station[] }> = ({
     (station: Station) => () => setSelected(station),
     []
   );
-  console.log(selected);
   return (
     <div>
       <div className="grid grid-cols-4 mx-4">
