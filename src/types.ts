@@ -2,7 +2,7 @@ export type TextPack = {
   "#text": string;
 };
 
-type Program = {
+export type Program = {
   id: string;
   ft: string;
   to: string;
