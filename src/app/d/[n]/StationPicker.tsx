@@ -1,9 +1,9 @@
 "use client";
 import { unwrapText } from "lib/xml2json";
-import { Program, Station } from "types";
+import { Station } from "types";
 import { useCallback, useState } from "react";
 import clsx from "clsx";
-import React from "react";
+import { ProgramPicker } from "./ProgramPicker";
 
 export const StationPicker: React.FC<{ stations: Station[] }> = ({
   stations,
@@ -12,21 +12,6 @@ export const StationPicker: React.FC<{ stations: Station[] }> = ({
   const selectStation = useCallback(
     (station: Station) => () => setSelected(station),
     []
-  );
-  const selectProgram = useCallback(
-    (program: Program) => async () => {
-      if (selected) {
-        fetch("/api/save", {
-          method: "POST",
-          body: JSON.stringify({
-            ft: program.ft,
-            title: unwrapText(program.title),
-            id: selected.id,
-          }),
-        });
-      }
-    },
-    [selectStation]
   );
   return (
     <div>
@@ -48,20 +33,11 @@ export const StationPicker: React.FC<{ stations: Station[] }> = ({
       {selected && (
         <div className="grid grid-cols-3">
           {selected.progs.prog.map((program) => (
-            <div
+            <ProgramPicker
+              id={selected.id}
+              program={program}
               key={program.id}
-              className="my-4 mx-4 border border-gray-400 border-solid rounded p-2 cursor-pointer"
-              onClick={selectProgram(program)}
-            >
-              <div className="text-xl">{unwrapText(program.title)}</div>
-              <div className="text-xs text-gray-400 mb-2">
-                {unwrapText(program.pfm)}
-              </div>
-              <div
-                dangerouslySetInnerHTML={{ __html: unwrapText(program.info) }}
-                className="text-sm"
-              ></div>
-            </div>
+            ></ProgramPicker>
           ))}
         </div>
       )}
