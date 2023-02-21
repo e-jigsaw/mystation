@@ -15,4 +15,10 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag mystation:$(date +%s)
+      run: docker build . --file Dockerfile --tag ghcr.io/e-jigsaw/mystation:latest
+    - uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: e-jigsaw
+          password: ${{ secrets.GITHUB_TOKEN }}
+    - run: docker push ghcr.io/e-jigsaw/mystation:latest
