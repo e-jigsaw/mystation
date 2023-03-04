@@ -20,9 +20,9 @@ export default async function handler(
         const filename = `${body.ft}-${body.id}`;
         execSync(`mkdir -p /mnt/data/output/${filename}`);
         execSync(
-          `mv /mnt/data/output/${filename}.mp3 /mnt/data/${filename}/a.mp3`
+          `mv /mnt/data/output/${filename}.mp3 /mnt/data/output/${filename}/a.mp3`
         );
-        writeFileSync(`/mnt/data/${filename}/meta.json`, req.body);
+        writeFileSync(`/mnt/data/output/${filename}/meta.json`, req.body);
         res.status(200).json({ ok: true });
       }
     );
