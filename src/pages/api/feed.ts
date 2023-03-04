@@ -49,11 +49,11 @@ export default async function handler(
     feed.item({
       title: meta.title,
       enclosure: {
-        url: `http://${req.headers.host}/output/${dir}/a.mp3`,
+        url: `http://${req.headers.host?.split(":")[0]}/output/${dir}/a.mp3`,
         size: stat.size,
       },
       description: "",
-      url: `http://${req.headers.host}/output/${dir}/a.mp3`,
+      url: `http://${req.headers.host?.split(":")[0]}/output/${dir}/a.mp3`,
       date: parse(meta.ft, "yyyyMMddHHmmss", new Date()),
     });
   });
