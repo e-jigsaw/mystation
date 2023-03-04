@@ -7,7 +7,7 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const dirs = readdirSync("./public/output").filter((name) =>
+  const dirs = readdirSync("/mnt/data/output").filter((name) =>
     name.match(/\d{14}\-([A-Z]|\-)+/)
   );
   const feed = new RSS({
@@ -43,9 +43,9 @@ export default async function handler(
   });
   dirs.reverse().forEach((dir) => {
     const meta = JSON.parse(
-      readFileSync(`public/output/${dir}/meta.json`).toString()
+      readFileSync(`/mnt/data/output/${dir}/meta.json`).toString()
     );
-    const stat = statSync(`public/output/${dir}/a.mp3`);
+    const stat = statSync(`/mnt/data/output/${dir}/a.mp3`);
     feed.item({
       title: meta.title,
       enclosure: {
