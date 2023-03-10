@@ -17,7 +17,7 @@ export default async function handler(
       {
         "itunes:image": {
           _attr: {
-            href: "http://mystation.lan",
+            href: process.env.DOMAIN,
           },
         },
       },
@@ -34,8 +34,8 @@ export default async function handler(
         "itunes:explicit": "false",
       },
     ],
-    feed_url: "http://mystation.lan",
-    site_url: "http://mystation.lan",
+    feed_url: process.env.DOMAIN!,
+    site_url: process.env.DOMAIN!,
     custom_namespaces: {
       itunes: "http://www.itunes.com/dtds/podcast-1.0.dtd",
     },
@@ -50,11 +50,11 @@ export default async function handler(
       feed.item({
         title: meta.title,
         enclosure: {
-          url: `http://${req.headers.host?.split(":")[0]}/output/${dir}/a.mp3`,
+          url: `${process.env.ASSET_DOMAIN}/output/${dir}/a.mp3`,
           size: stat.size,
         },
         description: "",
-        url: `http://${req.headers.host?.split(":")[0]}/output/${dir}/a.mp3`,
+        url: `${process.env.ASSET_DOMAIN}/output/${dir}/a.mp3`,
         date: parse(meta.ft, "yyyyMMddHHmmss", new Date()),
       });
     }
