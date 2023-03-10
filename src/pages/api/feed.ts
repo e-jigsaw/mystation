@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { readdirSync, readFileSync, statSync } from "fs";
+import { readdirSync, readFileSync, statSync, existsSync } from "fs";
 import RSS from "rss";
 import { parse } from "date-fns";
 
@@ -42,20 +42,22 @@ export default async function handler(
     language: "ja-jp",
   });
   dirs.reverse().forEach((dir) => {
-    const meta = JSON.parse(
-      readFileSync(`/mnt/data/output/${dir}/meta.json`).toString()
-    );
-    const stat = statSync(`/mnt/data/output/${dir}/a.mp3`);
-    feed.item({
-      title: meta.title,
-      enclosure: {
+    const metaPath = `/mnt/data/output/${dir}/meta.json`;
+    const audioPath = `/mnt/data/output/${dir}/a.mp3`;
+    if (existsSync(metaPath) && existsSync(audioPath)) {
+      const meta = JSON.parse(readFileSync(metaPath).toString());
+      const stat = statSync(audioPath);
+      feed.item({
+        title: meta.title,
+        enclosure: {
+          url: `http://${req.headers.host?.split(":")[0]}/output/${dir}/a.mp3`,
+          size: stat.size,
+        },
+        description: "",
         url: `http://${req.headers.host?.split(":")[0]}/output/${dir}/a.mp3`,
-        size: stat.size,
-      },
-      description: "",
-      url: `http://${req.headers.host?.split(":")[0]}/output/${dir}/a.mp3`,
-      date: parse(meta.ft, "yyyyMMddHHmmss", new Date()),
-    });
+        date: parse(meta.ft, "yyyyMMddHHmmss", new Date()),
+      });
+    }
   });
   res.status(200).send(feed.xml());
 }
