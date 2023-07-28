@@ -9,23 +9,23 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@xmldom/xmldom": "^0.8.6",
-    "clsx": "^1.2.1",
+    "@xmldom/xmldom": "^0.8.10",
+    "clsx": "^2.0.0",
     "date-fns": "^2.29.3",
-    "next": "^13.1.6",
-    "rambda": "^7.4.0",
+    "next": "^13.4.12",
+    "rambda": "^8.3.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "rss": "^1.2.2"
   },
   "devDependencies": {
-    "@types/jsdom": "^21.1.0",
+    "@types/jsdom": "^21.1.1",
     "@types/node": "18.14.0",
-    "@types/react": "18.0.28",
+    "@types/react": "18.2.17",
     "@types/rss": "^0.0.30",
-    "autoprefixer": "^10.4.13",
-    "postcss": "^8.4.21",
-    "tailwindcss": "^3.2.7",
-    "typescript": "^4.9.5"
+    "autoprefixer": "^10.4.14",
+    "postcss": "^8.4.27",
+    "tailwindcss": "^3.3.3",
+    "typescript": "^5.1.6"
   }
 }
