@@ -16,9 +16,9 @@ export const DatePicker = () => {
       };
     });
   return (
-    <div className="flex justify-around h-screen items-center">
+    <div>
       {week.map((day) => (
-        <Link href={`/d/${day.num}`} key={day.num} className="block">
+        <Link href={`/d/${day.num}`} key={day.num} className="block mb-4">
           <div className="text-5xl">{day.formatted}</div>
           <div className="text-base">{day.doe}</div>
         </Link>
