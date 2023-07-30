@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { exec } from "child_process";
 import { client } from "lib/getClient";
+import { updateList } from "lib/updateList";
 
 export async function POST(req: Request) {
   const body = await req.json();
@@ -22,6 +23,8 @@ export async function POST(req: Request) {
           ),
         ]);
         console.log(meta, file);
+        await updateList();
+        console.log("updated RSS");
       }
     );
     return NextResponse.json({ ok: true }, { status: 200 });
