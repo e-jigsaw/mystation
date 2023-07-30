@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { exec } from "child_process";
+import { exec, execSync } from "child_process";
 import { client } from "lib/getClient";
 import { updateList } from "lib/updateList";
 
@@ -23,6 +23,7 @@ export async function POST(req: Request) {
           ),
         ]);
         console.log(meta, file);
+        execSync(`rm -rf ./output/${filename}.mp3`);
         await updateList();
         console.log("updated RSS");
       }
