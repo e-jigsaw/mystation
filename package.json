@@ -3,7 +3,7 @@
   "name": "mystation",
   "description": "",
   "scripts": {
-    "dev": "next dev",
+    "dev": "op run --env-file=\"./.env.development\" -- next dev",
     "build": "next build",
     "start": "next start"
   },
@@ -12,6 +12,7 @@
     "@xmldom/xmldom": "^0.8.10",
     "clsx": "^2.0.0",
     "date-fns": "^2.29.3",
+    "minio": "^7.1.1",
     "next": "^13.4.12",
     "rambda": "^8.3.0",
     "react": "^18.2.0",
