@@ -66,7 +66,7 @@ export const updateList = () => {
               size: stat.size,
             },
             description: "",
-            url: `${process.env.ASSET_DOMAIN}/${prefix}/a.mp3`,
+            url: `${process.env.ASSET_DOMAIN}/${prefix}a.mp3`,
             date: parse(data.ft, "yyyyMMddHHmmss", new Date()),
           });
         } catch (err) {
