@@ -5,12 +5,12 @@ const id = ""; // insert id
 const main = async () => {
   const [meta, file] = await Promise.all([
     client.fPutObject(
-      "mystation",
+      process.env.MINIO_BUCKET!,
       `output/${id}/meta.json`,
       `./output/${id}/meta.json`
     ),
     client.fPutObject(
-      "mystation",
+      process.env.MINIO_BUCKET!,
       `output/${id}/a.mp3`,
       `./output/${id}/${id}.mp3`
     ),

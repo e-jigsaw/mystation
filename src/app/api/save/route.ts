@@ -15,12 +15,12 @@ export async function POST(req: Request) {
         const filename = `${body.ft}-${body.id}`;
         const [meta, file] = await Promise.all([
           client.putObject(
-            "mystation",
+            process.env.MINIO_BUCKET!,
             `output/${filename}/meta.json`,
             JSON.stringify(body)
           ),
           client.fPutObject(
-            "mystation",
+            process.env.MINIO_BUCKET!,
             `output/${filename}/a.mp3`,
             `./output/${filename}.mp3`
           ),

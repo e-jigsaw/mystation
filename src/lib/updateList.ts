@@ -42,7 +42,7 @@ export const updateList = () => {
   });
   return new Promise((resolve, reject) => {
     const list: string[] = [];
-    const str = client.listObjectsV2("mystation", "output/");
+    const str = client.listObjectsV2(process.env.MINIO_BUCKET!, "output/");
     str.on("data", (obj) => {
       if (obj.prefix?.match(/\d{14}\-([A-Z]|\-)+/)) {
         list.push(obj.prefix);
@@ -54,10 +54,13 @@ export const updateList = () => {
       for (const prefix of sorted) {
         try {
           const data = (await getObject(
-            "mystation",
+            process.env.MINIO_BUCKET!,
             `${prefix}meta.json`
           )) as Program;
-          const stat = await client.statObject("mystation", `${prefix}a.mp3`);
+          const stat = await client.statObject(
+            process.env.MINIO_BUCKET!,
+            `${prefix}a.mp3`
+          );
           metas.push(data);
           feed.item({
             title: data.title,
@@ -74,9 +77,14 @@ export const updateList = () => {
           continue;
         }
       }
-      const res = await client.putObject("mystation", "feed.xml", feed.xml(), {
-        "Content-Type": "application/xml",
-      });
+      const res = await client.putObject(
+        process.env.MINIO_BUCKET!,
+        "feed.xml",
+        feed.xml(),
+        {
+          "Content-Type": "application/xml",
+        }
+      );
       console.log(res);
       resolve(void 0);
     });
