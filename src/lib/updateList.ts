@@ -44,7 +44,7 @@ export const updateList = () => {
     const list: string[] = [];
     const str = client.listObjectsV2("mystation", "output/");
     str.on("data", (obj) => {
-      if (obj.prefix.match(/\d{14}\-([A-Z]|\-)+/)) {
+      if (obj.prefix?.match(/\d{14}\-([A-Z]|\-)+/)) {
         list.push(obj.prefix);
       }
     });
