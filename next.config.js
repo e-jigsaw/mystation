@@ -4,7 +4,7 @@ const nextConfig = {
     return [
       {
         source: "/api/feed",
-        destination: "https://s3.jgs.me/mystation/feed.xml",
+        destination: `https://s3.jgs.me/${process.env.MINIO_BUCKET}/feed.xml`,
       },
     ];
   },
