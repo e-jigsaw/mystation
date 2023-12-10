@@ -1,8 +1,6 @@
-import { format } from "date-fns";
-import { xml2json } from "lib/xml2json";
 import Link from "next/link";
 import { StationPicker } from "./StationPicker";
-import { RadikoPack } from "types";
+import { getPrograms } from "lib/getPrograms";
 
 async function getData(n: string) {
   // WHY????
@@ -11,14 +9,9 @@ async function getData(n: string) {
       ok: false,
     };
   }
-  const date = new Date(parseInt(n));
-  const res = await fetch(
-    `https://radiko.jp/v3/program/date/${format(date, "yyyyMMdd")}/JP13.xml`
-  );
-  const xml = await res.text();
   return {
     ok: true,
-    data: xml2json(xml) as RadikoPack,
+    data: await getPrograms(n),
   };
 }
 
