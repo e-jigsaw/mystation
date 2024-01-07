@@ -10,7 +10,11 @@ export async function POST(req: Request) {
   if (body.ft.match(/\d{14}/) && body.id.match(/([A-Z]|\-)+/)) {
     exec(
       `docker run -v ./output:/output radigo rec -o=mp3 -id=${body.id} -s=${body.ft}`,
-      async () => {
+      async (error) => {
+        if (error) {
+          postMessage(`error: ${error.message}`);
+          return;
+        }
         postMessage(`donwloaded: ${body.title}`);
         const filename = `${body.ft}-${body.id}`;
         const [meta, file] = await Promise.all([
