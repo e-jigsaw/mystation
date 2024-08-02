@@ -1,8 +1,11 @@
 import { NextResponse } from "next/server";
 import { exec, execSync } from "child_process";
 import { client } from "lib/getClient";
-import { updateList } from "lib/updateList";
 import { postMessage } from "lib/postMessage";
+import { db } from "db/db";
+import { programs, radio } from "db/schema";
+import { eq } from "drizzle-orm";
+import { parse } from "date-fns";
 
 export async function POST(req: Request) {
   const body = await req.json();
@@ -29,10 +32,36 @@ export async function POST(req: Request) {
             `./output/${filename}.mp3`
           ),
         ]);
+        const stat = await client.statObject(
+          process.env.MINIO_BUCKET!,
+          `output/${filename}/a.mp3`
+        );
         postMessage(`uploaded: meta:${meta.etag}/file:${file.etag}`);
         execSync(`rm -rf ./output/${filename}.mp3`);
-        await updateList();
-        postMessage(`RSS Updated!`);
+        let r = await db.query.radio.findFirst({
+          where: eq(radio.name, body.title),
+        });
+        if (!r) {
+          const res = await db
+            .insert(radio)
+            .values({ name: body.title })
+            .returning();
+          if (res.length > 0) {
+            r = res[0];
+          }
+        }
+        const p = await db
+          .insert(programs)
+          .values({
+            body: {
+              url: `${process.env.ASSET_DOMAIN}/${filename}/a.mp3`,
+              size: stat.size,
+            },
+            radioId: r?.id,
+            pubDate: parse(body.ft, "yyyyMMddHHmmss", new Date()),
+          })
+          .returning();
+        postMessage(`DB Updated: ${p[0].id}`);
       }
     );
     return NextResponse.json({ ok: true }, { status: 200 });
