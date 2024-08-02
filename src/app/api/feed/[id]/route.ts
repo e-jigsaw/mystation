@@ -3,7 +3,6 @@ import { db } from "db/db";
 import { desc, eq } from "drizzle-orm";
 import { programs, radio } from "db/schema";
 import RSS from "rss";
-import { format } from "date-fns";
 
 export async function GET(
   req: Request,
@@ -50,7 +49,7 @@ export async function GET(
     });
     for (const p of res) {
       feed.item({
-        title: format(p.pubDate, "yyyy/MM/dd"),
+        title: r.name,
         enclosure: p.body,
         description: "",
         url: p.body.url,
