@@ -54,7 +54,7 @@ export async function POST(req: Request) {
           .insert(programs)
           .values({
             body: {
-              url: `${process.env.ASSET_DOMAIN}/${filename}/a.mp3`,
+              url: `${process.env.ASSET_DOMAIN}/output/${filename}/a.mp3`,
               size: stat.size,
             },
             radioId: r?.id,
