@@ -7,6 +7,10 @@ export default async function Page({ params }: { params: { id: string } }) {
     with: { programs: true },
     where: eq(radio.id, Number(params.id)),
   });
-  console.log(_radio);
-  return <div className="p-2">hey</div>;
+  return (
+    <div className="p-2">
+      <div>{_radio?.id}</div>
+      <div>{_radio?.name}</div>
+    </div>
+  );
 }
