@@ -1,0 +1,1 @@
+ALTER TABLE "radio" ADD COLUMN "name" text NOT NULL;
